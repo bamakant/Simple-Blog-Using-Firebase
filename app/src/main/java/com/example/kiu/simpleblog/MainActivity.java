@@ -16,12 +16,16 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity {
@@ -29,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView mBlogList;
 
     private DatabaseReference mDatabase;
+    private DatabaseReference mDatabaseUsers;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
 
@@ -40,6 +45,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Blogs");
+        mDatabaseUsers = FirebaseDatabase.getInstance().getReference().child("Users");
+        mDatabaseUsers.keepSynced(true);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -51,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if (firebaseAuth.getCurrentUser() == null){
 
-                    Intent loginIntent = new Intent(MainActivity.this, RegistrationActivity.class);
+                    Intent loginIntent = new Intent(MainActivity.this, LogInActivity.class);
                     loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(loginIntent);
                 }
@@ -79,6 +86,7 @@ public class MainActivity extends AppCompatActivity {
                 .build();
 */
 
+        checkUserExist();
 
         mAuth.addAuthStateListener(mAuthListener);
 
@@ -101,6 +109,30 @@ public class MainActivity extends AppCompatActivity {
 
         firebaseRecyclerAdapter.notifyDataSetChanged();
         mBlogList.setAdapter(firebaseRecyclerAdapter);
+
+    }
+
+    private void checkUserExist() {
+
+        final String user_id = mAuth.getCurrentUser().getUid();
+
+        mDatabaseUsers.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (!dataSnapshot.hasChild(user_id)){
+
+                    Intent setupIntent = new Intent(MainActivity.this,SetupAccountActivity.class);
+                    setupIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(setupIntent);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
 
     }
 
