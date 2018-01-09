@@ -74,9 +74,9 @@ public class RegistrationActivity extends AppCompatActivity {
 
                         String user_id = mAuth.getCurrentUser().getUid();
 
-                        DatabaseReference current_user_db = mDatabase.child(user_id);
+                       DatabaseReference current_user_db = mDatabase.child(user_id);
 
-                        current_user_db.child("name").setValue(name);
+                       current_user_db.child("name").setValue(name);
 
                         mDialog.dismiss();
 

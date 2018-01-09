@@ -30,6 +30,9 @@ dependencies {
     compile 'com.google.firebase:firebase-storage:11.4.2'
     compile 'com.google.firebase:firebase-auth:11.4.2'
 
+    compile 'com.google.android.gms:play-services-auth:11.4.2'
+    compile 'com.google.android.gms:play-services:11.4.2'
+
     // FirebaseUI for Firebase Realtime Database
     implementation 'com.firebaseui:firebase-ui-database:0.4.0'
     implementation 'com.android.support:recyclerview-v7:26.1.0'
