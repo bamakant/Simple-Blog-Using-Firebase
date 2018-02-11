@@ -103,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
                       viewHolder.setTitle(model.getTitle());
                       viewHolder.setDesc(model.getDesc());
                       viewHolder.setImage(getApplicationContext(), model.getImage());
+                      viewHolder.setUid(model.getPost_uid());
                       progressBar.setVisibility(View.GONE);
                   }
               };
@@ -161,6 +162,11 @@ public class MainActivity extends AppCompatActivity {
         public void setImage(Context ctx, String image){
             ImageView postImage = mView.findViewById(R.id.blog_image_view);
             Picasso.with(ctx).load(image).into(postImage);
+        }
+
+        public void setUid(String uid){
+            TextView postUid = mView.findViewById(R.id.post_uid_view);
+            postUid.setText(uid);
         }
 
     }

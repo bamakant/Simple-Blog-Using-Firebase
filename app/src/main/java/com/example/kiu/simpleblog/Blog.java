@@ -6,18 +6,26 @@ package com.example.kiu.simpleblog;
 
 public class Blog {
 
-    private String title, desc, image;
+    private String title, desc, image,post_uid;
 
     public Blog() {
 
     }
 
-    public Blog(String title, String desc, String image) {
+    public Blog(String title, String desc, String image,String post_uid) {
         this.title = title;
         this.desc = desc;
         this.image = image;
+        this.post_uid = post_uid;
     }
 
+    public String getPost_uid() {
+        return post_uid;
+    }
+
+    public void setPost_uid(String post_uid) {
+        this.post_uid = post_uid;
+    }
 
     public String getTitle() {
         return title;
