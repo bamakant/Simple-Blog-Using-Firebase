@@ -102,8 +102,6 @@ public class PostActivity extends AppCompatActivity {
 
                     final String downloadString = downloadUri.toString();
 
-
-
                     mDatabaseUsers.child(mAuth.getCurrentUser().getUid()).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
